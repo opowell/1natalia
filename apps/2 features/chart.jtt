@@ -1,0 +1,49 @@
+app.description = 'Draw a chart using chart.js.';
+
+let stage = app.newStage('stage1');
+stage.activeScreen = `
+    <script src="/shared/Chart.min.js"></script>
+    <canvas id="myChart"></canvas>
+    <script>
+        let initChart = function() {
+            jt.chart = Chart.Scatter('myChart', {
+                data: {
+                    datasets: [
+                        {
+                            data: [
+                                {x: 20, y: 20},
+                                {x: 30, y: 30},
+                                {x: 40, y: 40},
+                            ]
+                        }
+                    ],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                max: 100,
+                                min: 0,
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                max: 100,
+                                min: 0,
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+        }
+        jt.postUpdatePlayer = function() {
+            initChart();
+        }
+    </script>
+`;
+
+
+

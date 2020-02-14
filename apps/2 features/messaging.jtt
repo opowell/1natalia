@@ -1,0 +1,29 @@
+app.description = 'Send messages between clients and server.';
+
+let stage = app.newStage('stage1');
+stage.activeScreen = `
+    <input type='text' id='msgInput' placeholder='Type your message here...'>
+    <button type='button' onclick='sendMsgToServer()'>Send message</button>
+    <h2>Chat</h2>
+    <p id='chat'></p>
+    <script>
+        sendMsgToServer = function() {
+            let content = $('#msgInput').val();
+            jt.sendMessage("playerMsg", content);
+        }
+        jt.messages.serverMsg = function(message) {
+            let msgEl = $('<div>').text(message.playerId + ": " + message.content);
+            $('#chat').append(msgEl);
+        }
+    </script>
+`;
+
+app.messages.playerMsg = function(content) {
+    let playerId = this.participant.id;
+    console.log('Message from ' + playerId + ': ' + content);
+    let serverMsg = {
+        playerId,
+        content
+    }
+    this.participant.player.group.emit('serverMsg', serverMsg);
+}
