@@ -2,3 +2,4 @@
 sessions
 internal/logs
 internal/serverState.json
+.DS_Store
